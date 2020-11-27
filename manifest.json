@@ -13,7 +13,8 @@
   "content_scripts": [
     {
       "matches": ["*://new.precisionconference.com/submissions"],
-      "js": ["zenifier.js"]
+      "js": ["zenifier.js"],
+      "css": ["zenifier.css"]
     }
   ]
 

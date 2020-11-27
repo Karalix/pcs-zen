@@ -1,0 +1,28 @@
+.zen-button {
+    border-radius: 15px;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    color: red;
+    border-style: inset;
+    border-color: red;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.notzen {
+    color: green;
+    border-style: inset;
+    border-color: green;
+}
+
+tr[role="row"] {
+    transition-property: visibility opacity;
+    transition-duration: 1s;
+}
+
+.hidden {
+    visibility: collapse;
+    opacity: 0;
+}
