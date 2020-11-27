@@ -16,6 +16,10 @@
       "js": ["zenifier.js"],
       "css": ["zenifier.css"]
     }
+  ],
+
+  "permissions" : [
+    "storage"
   ]
 
 }
