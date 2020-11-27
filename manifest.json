@@ -1,0 +1,20 @@
+{
+
+  "manifest_version": 2,
+  "name": "PCS-zen",
+  "version": "1.0",
+
+  "description": "Achieve instant academic success and gratification by hidding rejected papers from PCS",
+
+  "icons": {
+    "48": "icons/pcs-zen-logo.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://new.precisionconference.com/submissions"],
+      "js": ["zenifier.js"]
+    }
+  ]
+
+}
