@@ -17,7 +17,7 @@ padding: 5px;
 button.addEventListener('click', () => {
     if (button.classList.contains('notzen')) {
         for (row of document.querySelectorAll('tr[role=row]')) {
-            if (row.innerHTML.includes('not accepted')) {
+            if (row.innerHTML.toUpperCase().includes('NOT ACCEPTED')) {
                 row.style = 'visibility: collapse'
             }
         }
@@ -37,8 +37,9 @@ button.addEventListener('click', () => {
 
         button.classList.toggle('notzen')
     } else {
+
         for (row of document.querySelectorAll('tr[role=row]')) {
-            if (row.innerHTML.includes('not accepted')) {
+            if (row.innerHTML.toUpperCase().includes('NOT ACCEPTED')) {
                 row.style = 'visibility: visible'
             }
         }
