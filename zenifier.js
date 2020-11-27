@@ -10,7 +10,7 @@ browser.storage.local.get('pcshide').then((items) => {
                     setTimeout(() => {
                         document.querySelector('.zen-button').click()
                         observer.disconnect()
-                    }, 500)
+                    }, 1000)
                 }
             }
         })
