@@ -67,31 +67,35 @@ button.addEventListener("click", () => {
   }
 });
 
-// columns: [
-//     { title: "Status" },
-//     { title: "Title" },
-//     { title: "Office" },
-//     { title: "Extn." },
-//     { title: "Start date" },
-//     { title: "Salary" }
-// ]
+document.querySelector("body").append(button);
+
+// We get the data from the existing table
 table = $("#user_submissions").DataTable().data().toArray();
+// We look for the yar of the conference in the 4th column of every row
+// This should be the Category colum.
 table.forEach(function (row) {
+  // This regex looks for four digits in a row, hopefully it should be a year.
+  // Might cause problems if a conference is named '22 instead of 2022.
   const regex = /((\b\d{4}\b))/;
   const year = regex.exec(row[4])[0];
+  // we add the year to each row of submission
   row.push(year);
 });
 
+// We need the list of column titles / header names
+// to recreate the table later.
 let columns = [];
 theaders = $("#user_submissions").DataTable().columns().header();
 for (let i = 0; i < theaders.length; i++) {
-  //console.log(i, theaders[i].innerText);
   columns.push({ title: theaders[i].innerText });
 }
+// We add a new column to the list : "Year"
 columns.push({ title: "Year" });
-console.log(columns);
 
+// We destroy the table
 $("#user_submissions_wrapper").remove();
+
+// We create a new table element
 let newtable = document.createElement("table");
 newtable.setAttribute("id", "user_submissions");
 newtable.setAttribute(
@@ -99,11 +103,13 @@ newtable.setAttribute(
   "dynamictable display compact None dataTable no-footer"
 );
 newtable.setAttribute("width", "100%");
+
+// We add the new table back to the parent div
 $("#user_submissions_enclosure").append(newtable);
+
+// We recreate the table
 $("#user_submissions").DataTable({
   data: table,
   columns: columns,
   paging: false,
 });
-
-document.querySelector("body").append(button);
