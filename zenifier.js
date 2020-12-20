@@ -11,6 +11,9 @@ let showSentences = [
 let calledOnce = false;
 
 
+// Check if we are on Firefox, otherwise we assume Chrome
+let firefox = typeof(browser) != 'undefined'
+
 function addYearCol () {
   // We get the data from the existing table
   table = $("#user_submissions").DataTable().data().toArray();
@@ -70,13 +73,22 @@ const observer = new MutationObserver((mutationList, observer) => {
         calledOnce = true
         setTimeout(() => {
           // Check if elements were hidden
-          browser.storage.local
-            .get('pcshide')
-            .then((items) => {
-              if (items.pcshide) {
-                document.querySelector(".zen-button").click();
-              }
-            });
+          if (firefox) {
+            browser.storage.local
+              .get('pcshide')
+              .then((items) => {
+                if (items.pcshide) {
+                  document.querySelector(".zen-button").click();
+                }
+              });
+          } else {
+            chrome.storage.sync
+              .get(['pcshide'], (result) => {
+                if(result.pcshide) {
+                  document.querySelector(".zen-button").click();
+                }
+              })
+          }
           addYearCol();
         }, 1000);
       }  
@@ -105,7 +117,11 @@ button.addEventListener("click", () => {
       showSentences[Math.floor(Math.random() * showSentences.length)];
 
     button.classList.toggle("notzen");
-    browser.storage.local.set({ pcshide: true });
+    if (firefox) {
+      bro.storage.local.set({ pcshide: true });
+    } else {
+      chrome.storage.sync.set({ pcshide: true});
+    }
   } else {
     for (row of document.querySelectorAll("tr[role=row]")) {
       if (row.innerHTML.toUpperCase().includes("NOT ACCEPTED")) {
@@ -117,8 +133,11 @@ button.addEventListener("click", () => {
       hideSentences[Math.floor(Math.random() * hideSentences.length)];
 
     button.classList.toggle("notzen");
-    browser.storage.local.set({ pcshide: false });
-  }
+    if (firefox) {
+      bro.storage.local.set({ pcshide: false });
+    } else {
+      chrome.storage.sync.set({ pcshide: false});
+    }  }
 });
 
 document.querySelector("body").append(button);
