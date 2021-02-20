@@ -17,13 +17,14 @@ let firefox = typeof(browser) != 'undefined'
 function addYearCol () {
   // We get the data from the existing table
   table = $("#user_submissions").DataTable().data().toArray();
-  // We look for the yar of the conference in the 4th column of every row
-  // This should be the Category colum.
+  datatable = $("#user_submissions").DataTable();
+  // "Category" columns (intially the 5th)
+  let catcol = datatable.columns()[0][4]
   table.forEach(function (row) {
     // This regex looks for four digits in a row, hopefully it should be a year.
     // Might cause problems if a conference is named '22 instead of 2022.
     const regex = /.*\b(\d{4})\b.*/;
-    const year = regex.exec(row[4])[1];
+    const year = regex.exec(row[catcol])[1];
     // we add the year to each row of submission
     row.push(year);
   });
