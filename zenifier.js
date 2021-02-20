@@ -101,44 +101,94 @@ observer.observe(document.querySelector("#user_submissions_enclosure"), {
 });
 
 
+function toggleFails(button) {
+  if (button.classList.contains("notzen")) {
+    for (row of document.querySelectorAll("tbody tr[role=row]")) {
+      if (row.innerHTML.toUpperCase().includes("NOT ACCEPTED")) {
+        row.classList.add("hidden");
+      }
+    }
+  } else {
+    for (row of document.querySelectorAll("tbody tr[role=row]")) {
+      if (row.innerHTML.toUpperCase().includes("NOT ACCEPTED")) {
+        row.classList.remove("hidden");
+      }
+    } }
+}
+
+function toggleSuccess(button) {
+  if (button.classList.contains("notzen")) {
+    for (row of document.querySelectorAll("tbody tr[role=row]")) {
+      if (!row.innerHTML.toUpperCase().includes("NOT ACCEPTED")) {
+        row.classList.add("hidden");
+      }
+    }
+  } else {
+    for (row of document.querySelectorAll("tbody tr[role=row]")) {
+      if (!row.innerHTML.toUpperCase().includes("NOT ACCEPTED")) {
+        row.classList.remove("hidden");
+      }
+    } }
+}
+
 let button = document.createElement("button");
 button.classList.add("zen-button", "notzen");
 button.innerHTML =
   hideSentences[Math.floor(Math.random() * hideSentences.length)];
 
 button.addEventListener("click", () => {
+  toggleFails(button)
   if (button.classList.contains("notzen")) {
-    for (row of document.querySelectorAll("tr[role=row]")) {
-      if (row.innerHTML.toUpperCase().includes("NOT ACCEPTED")) {
-        row.classList.add("hidden");
-      }
-    }
-
     button.innerHTML =
       showSentences[Math.floor(Math.random() * showSentences.length)];
-
-    button.classList.toggle("notzen");
+      
     if (firefox) {
       browser.storage.local.set({ pcshide: true });
     } else {
       chrome.storage.sync.set({ pcshide: true});
     }
   } else {
-    for (row of document.querySelectorAll("tr[role=row]")) {
-      if (row.innerHTML.toUpperCase().includes("NOT ACCEPTED")) {
-        row.classList.remove("hidden");
-      }
-    }
-
     button.innerHTML =
       hideSentences[Math.floor(Math.random() * hideSentences.length)];
-
-    button.classList.toggle("notzen");
+    
     if (firefox) {
       browser.storage.local.set({ pcshide: false });
     } else {
       chrome.storage.sync.set({ pcshide: false});
-    }  }
+    } 
+  }
+  
+  button.classList.toggle("notzen");
 });
 
 document.querySelector("body").append(button);
+
+// Hide Successes variant
+let buttonsuccess = document.createElement("button");
+buttonsuccess.classList.add("zen-button-success", "notzen");
+buttonsuccess.innerHTML = "I just want to see rejects"
+
+  buttonsuccess.addEventListener("click", () => {
+  toggleSuccess(buttonsuccess)
+  if (buttonsuccess.classList.contains("notzen")) {
+    buttonsuccess.innerHTML = "Let me see success again"
+      
+    if (firefox) {
+      browser.storage.local.set({ pcshide: true });
+    } else {
+      chrome.storage.sync.set({ pcshide: true});
+    }
+  } else {
+    buttonsuccess.innerHTML = "I just want to see rejects"
+    
+    if (firefox) {
+      browser.storage.local.set({ pcshide: false });
+    } else {
+      chrome.storage.sync.set({ pcshide: false});
+    } 
+  }
+  
+  buttonsuccess.classList.toggle("notzen");
+});
+
+document.querySelector("body").append(buttonsuccess);

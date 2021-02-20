@@ -11,6 +11,19 @@
     cursor: pointer;
 }
 
+.zen-button-success {
+    border-radius: 15px;
+    position: absolute;
+    top: 10px;
+    right: 320px;
+    background-color: white;
+    color: red;
+    border-style: inset;
+    border-color: red;
+    padding: 5px;
+    cursor: pointer;
+}
+
 .notzen {
     color: green;
     border-style: inset;
