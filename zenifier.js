@@ -1,12 +1,12 @@
 let hideSentences = [
   "🌟 Instant & Free academic success 🌟",
-  "🏆 Boost my h-index 🏆",
-  "✨ Beautify this page ✨",
+  "🏆 Hide my failures 🏆",
+  "✨ Make this page succesful ✨",
 ];
 let showSentences = [
-  "😩 Let's feel miserable 😩",
-  "⛔️ Do not click this ⛔️",
-  "💥 I like it when it hurts 💥",
+  "😩 Face the truth 😩",
+  "⛔️ Stop hiding your mistakes ⛔️",
+  "💥 Stop lying to yourself 💥",
 ];
 let calledOnce = false;
 
@@ -119,7 +119,7 @@ button.addEventListener("click", () => {
 
     button.classList.toggle("notzen");
     if (firefox) {
-      bro.storage.local.set({ pcshide: true });
+      browser.storage.local.set({ pcshide: true });
     } else {
       chrome.storage.sync.set({ pcshide: true});
     }
@@ -135,7 +135,7 @@ button.addEventListener("click", () => {
 
     button.classList.toggle("notzen");
     if (firefox) {
-      bro.storage.local.set({ pcshide: false });
+      browser.storage.local.set({ pcshide: false });
     } else {
       chrome.storage.sync.set({ pcshide: false});
     }  }
