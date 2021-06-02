@@ -18,8 +18,16 @@ function addYearCol () {
   // We get the data from the existing table
   table = $("#user_submissions").DataTable().data().toArray();
   datatable = $("#user_submissions").DataTable();
+  catIndex = 0
+  //Let's find the "Category column"
+  for(let i = 0 ; i < datatable.columns().header().length ; i++) {
+    if(datatable.columns().header()[i].innerText === 'Category') {
+      catIndex = i
+      break
+    }
+  }
   // "Category" columns (intially the 5th)
-  let catcol = datatable.columns()[0][4]
+  let catcol = datatable.columns()[0][catIndex]
   table.forEach(function (row) {
     // This regex looks for four digits in a row, hopefully it should be a year.
     // Might cause problems if a conference is named '22 instead of 2022.
@@ -131,6 +139,22 @@ function toggleSuccess(button) {
     } }
 }
 
+
+function toggleComplete(button) {
+  if (button.classList.contains("notzen")) {
+    for (row of document.querySelectorAll("tbody tr[role=row]")) {
+      if (!row.innerHTML.toUpperCase().includes("CLASS=\"INCOMPLETE\"")) {
+        row.classList.add("hidden");
+      }
+    }
+  } else {
+    for (row of document.querySelectorAll("tbody tr[role=row]")) {
+      if (!row.innerHTML.toUpperCase().includes("CLASS=\"INCOMPLETE\"")) {
+        row.classList.remove("hidden");
+      }
+    } }
+}
+
 let button = document.createElement("button");
 button.classList.add("zen-button", "notzen");
 button.innerHTML =
@@ -192,3 +216,22 @@ buttonsuccess.innerHTML = "I just want to see rejects"
 });
 
 document.querySelector("body").append(buttonsuccess);
+
+
+// Hide Incompletes variant
+let buttonincomplete = document.createElement("button");
+buttonincomplete.classList.add("zen-button-incomplete", "notzen");
+buttonincomplete.innerHTML = "Show me work in progress only"
+
+buttonincomplete.addEventListener("click", () => {
+  toggleComplete(buttonincomplete)
+  if (buttonincomplete.classList.contains("notzen")) {
+    buttonincomplete.innerHTML = "Show all"
+  } else {
+    buttonincomplete.innerHTML = "Show me work in progress only"
+  }
+  
+  buttonincomplete.classList.toggle("notzen");
+});
+
+document.querySelector("body").append(buttonincomplete);
